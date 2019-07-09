@@ -2,7 +2,7 @@
 
 namespace siic {
 
-void GameEngine::init( std::string title, int width = 640, int height = 480, bool fullscreen = false ) {
+void GameEngine::init( std::string title, int width, int height, bool fullscreen ) {
     this->window.init( title, width, height );
 
     if( fullscreen == true ) {
@@ -31,7 +31,7 @@ void GameEngine::change_state( siic::GameState * state ) {
     this->m_states.back()->init( this );
 }
 
-void GameEngine::push_state( siic::GameEngine * state ) {
+void GameEngine::push_state( siic::GameState * state ) {
     while( this->m_states.empty() == false ) {
         this->m_states.back()->pause();
     }

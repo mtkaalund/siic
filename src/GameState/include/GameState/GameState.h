@@ -20,7 +20,7 @@ public:
 
     void change_state( GameEngine * game, GameState * state );
 protected:
-    GameState {};
+    GameState() {};
 };
 
 }

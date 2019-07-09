@@ -20,7 +20,7 @@ public:
     void cleanup();
 
     void change_state( siic::GameState * state );
-    void push_state( siic::GameEngine * state );
+    void push_state( siic::GameState * state );
     void pop_state();
 
     void handle_events();

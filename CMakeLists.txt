@@ -9,11 +9,13 @@ find_package(SDL2_image REQUIRED)
 
 #add subdirectory as required
 add_subdirectory(sdl2core)
+add_subdirectory(src/Window)
 #add_subdirectory(src/ProjectName)
 
 include_directories(
     ${sdl2core_sdl2}
     ${sdl2core_img}
+    ${Window}
 	)
 
 # Set C++ standard to C++17
@@ -27,4 +29,5 @@ target_link_libraries( ${PROJECT_NAME}
     sdl2core::img
     ${SDL2_LIBRARY}
     ${SDL2_IMAGE_LIBRARIES}
+    Window
 	)

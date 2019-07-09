@@ -4,6 +4,8 @@
 // sdl2core headers
 #include <sdl2core/SDL2.h>
 #include <sdl2core/IMG.h>
+// sdl2class headers
+#include <sdl2class/Window.h>
 
 int main( int argc, char * argv[] )
 {
@@ -19,6 +21,14 @@ int main( int argc, char * argv[] )
 		SDL2 sdl2( SDL_INIT_VIDEO | SDL_INIT_TIMER );
 		IMG img( IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF | IMG_INIT_WEBP );
 
+		sdl2class::Window game_window;
+		game_window.init(
+			"SIIC game window",
+			640,
+			480
+		);
+
+		SDL_Delay(2000);
 		// StateManager init
 		// while( game is running )
 		// {

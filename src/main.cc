@@ -1,5 +1,12 @@
-// STL C++ 
+// STL C
+#include <ctime>
+// STL C++
+#include <chrono>
+#include <string> 
+#include <fstream>
+#include <sstream>
 #include <iostream>
+#include <iomanip>
 #include <exception>
 // sdl2core headers
 #include <sdl2core/SDL2.h>
@@ -12,17 +19,60 @@
 
 int main( int argc, char * argv[] )
 {
+	// arguments variables
+	bool debug 			= false;
+	bool log_to_file	= false;
+
+	auto old_rdbuf = std::clog.rdbuf();
+	// No output from std::clog
+	std::clog.setstate(std::ios_base::failbit);
+
+	// Creating a file name for log output
+	auto now = std::chrono::system_clock::now();
+	auto in_time_t = std::chrono::system_clock::to_time_t(now);
+
+	std::stringstream strstream;
+	strstream << std::put_time( std::localtime(&in_time_t), "%d%m%Y-%H%M%S");
+
+	std::string log_name = "SIIC-log-" + strstream.str() + ".log";
+
+	std::ofstream log_out;
+	// Finished Creating file name
+
 	if( argc > 1 ) {
 		std::clog << argv[0] << " is started with following arguments: " << std::endl;
-		for(int arg = 1; arg < argc; arg++ )
+		for(int index = 1; index < argc; index++ )
 		{
-			std::cout << "argv[ " << arg << "] = " << argv[arg] << std::endl;
+			std::clog << "argv[ " << index << " ] = " << argv[ index ] << std::endl;
+			std::string arg = argv[ index ];
+			if( arg.compare("--debug") == 0 ) {
+				debug = true;
+			}
+
+			if( arg.compare("--log_to_file") == 0 ) {
+				log_to_file = true;
+			}
 		}
+	}
+
+	if( debug == true ) {
+		// Turn on std::clog output
+		std::clog.clear();
+	} 
+
+	if( log_to_file == true ) {
+		log_out.open( log_name.c_str() );
+
+		std::clog.rdbuf( log_out.rdbuf() );
+
+		std::clog << "File: " << log_name << std::endl;
 	}
 
 	try {
 		SDL2 sdl2( SDL_INIT_VIDEO | SDL_INIT_TIMER );
 		IMG img( IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF | IMG_INIT_WEBP );
+
+
 
 		siic::GameEngine game;
 		game.init("SIIC Game window");
@@ -36,6 +86,11 @@ int main( int argc, char * argv[] )
 		}
 
 		game.cleanup();
+
+		if( log_to_file == true ) {
+			std::clog.rdbuf( old_rdbuf );
+			log_out.close();
+		}
 
 	} catch( SDL2Exception &error ) {
 		std::cerr << "Catched SDL2 Exception: \n\t" << error.what() << std::endl;

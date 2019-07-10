@@ -12,7 +12,6 @@
 #include <sdl2core/SDL2.h>
 #include <sdl2core/IMG.h>
 // sdl2class headers
-//#include <sdl2class/Window.h>
 #include <GameEngine/GameEngine.h>
 #include <GameState/GameState.h>
 #include <IntroState/IntroState.h>
@@ -45,12 +44,23 @@ int main( int argc, char * argv[] )
 		{
 			std::clog << "argv[ " << index << " ] = " << argv[ index ] << std::endl;
 			std::string arg = argv[ index ];
+
 			if( arg.compare("--debug") == 0 ) {
 				debug = true;
 			}
 
 			if( arg.compare("--log_to_file") == 0 ) {
 				log_to_file = true;
+			}
+
+			if( arg.compare("--help") == 0 ) {
+				std::cout << argv[0] << " [options]" << std::endl;
+				std::cout << std::endl << "[options]" << std::endl;
+				std::cout << "--debug\t\t output debug information into terminal" << std::endl;
+				std::cout << "--log_to_file\t this need to be used with --debug option" << std::endl;
+				std::cout << "\t\t will output to a log file" << std::endl;
+				std::cout << "--help\t\t will output this help menu" << std::endl;
+				return 0;
 			}
 		}
 	}
@@ -71,8 +81,6 @@ int main( int argc, char * argv[] )
 	try {
 		SDL2 sdl2( SDL_INIT_VIDEO | SDL_INIT_TIMER );
 		IMG img( IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF | IMG_INIT_WEBP );
-
-
 
 		siic::GameEngine game;
 		game.init("SIIC Game window");

@@ -5,6 +5,8 @@ namespace siic {
 void GameEngine::init( std::string title, int width, int height, bool fullscreen ) {
     this->window.init( title, width, height );
 
+    this->m_is_running = true;
+
     if( fullscreen == true ) {
         this->window.fullscreen_on();
     }
@@ -62,6 +64,5 @@ void GameEngine::update() {
 void GameEngine::render() {
     this->m_states.back()->render(this);
 }
-
 
 }

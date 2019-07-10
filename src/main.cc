@@ -7,6 +7,8 @@
 // sdl2class headers
 //#include <sdl2class/Window.h>
 #include <GameEngine/GameEngine.h>
+#include <GameState/GameState.h>
+#include <IntroState/IntroState.h>
 
 int main( int argc, char * argv[] )
 {
@@ -23,19 +25,18 @@ int main( int argc, char * argv[] )
 		IMG img( IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF | IMG_INIT_WEBP );
 
 		siic::GameEngine game;
-		game.init("SIIC Game windoe");
+		game.init("SIIC Game window");
 		
-		SDL_Delay(2000);
+		game.push_state( siic::IntroState::instance() );
 
-		game.quit();
-		// StateManager init
-		// while( game is running )
-		// {
-		//	handle_events
-		//	update
-		//	render
-		// }
-		// cleanup
+		while( game.is_running() == true ) {
+			game.handle_events();
+			game.update();
+			game.render();
+		}
+
+		game.cleanup();
+
 	} catch( SDL2Exception &error ) {
 		std::cerr << "Catched SDL2 Exception: \n\t" << error.what() << std::endl;
 		return 1;

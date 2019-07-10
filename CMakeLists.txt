@@ -12,6 +12,7 @@ add_subdirectory(sdl2core)
 add_subdirectory(src/Window)
 add_subdirectory(src/GameState)
 add_subdirectory(src/GameEngine)
+add_subdirectory(src/IntroState)
 #add_subdirectory(src/ProjectName)
 
 include_directories(
@@ -20,6 +21,7 @@ include_directories(
     ${Window}
     ${GameState}
     ${GameEngine}
+    ${IntroState}
 	)
 
 # Set C++ standard to C++17
@@ -36,4 +38,5 @@ target_link_libraries( ${PROJECT_NAME}
     Window
     GameState
     GameEngine
+    IntroState
 	)
